@@ -17,6 +17,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var skull3: UIImageView!
     @IBOutlet weak var skull: UIImageView!
     @IBOutlet weak var skull2: UIImageView!
+    @IBOutlet weak var restartBtn: UIButton!
+    @IBOutlet weak var minerImg: MinerImg!
+    @IBOutlet weak var boulderImg: DragImage!
     
     var musicPlayer: AVAudioPlayer!
     var sfxBite: AVAudioPlayer!
@@ -38,6 +41,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         foodImg.dropTarget = monsterImg
         heartImg.dropTarget = monsterImg
+        boulderImg.dropTarget = monsterImg
         
         skull.alpha = DIM_ALPHA
         skull2.alpha = DIM_ALPHA
@@ -71,7 +75,9 @@ class ViewController: UIViewController {
         
         
     }
-    
+    @IBAction func restartPress(sender: AnyObject){
+        restartGame()
+    }
     func itemDroppedOnCharacter(notif :AnyObject){
         monsterHappy = true
         startTimer()
@@ -84,8 +90,11 @@ class ViewController: UIViewController {
         
         if currentImage == 0 {
             sfxBite.play()
-        } else {
+        } else  if currentImage == 1{
             sfxHeart.play()
+        } else {
+            monsterImg.playAttackAnimation()
+            minerImg.playHideAnimation()
         }
     }
     func startTimer(){
@@ -97,6 +106,7 @@ class ViewController: UIViewController {
     }
     func changeGameState(){
         
+        pickNeed()
         if !monsterHappy {
             if penalties < 4 {
                 penalties += 1
@@ -113,45 +123,75 @@ class ViewController: UIViewController {
                 skull3.alpha = DIM_ALPHA
             }
             else if penalties == 3 {
+                gameOver()
+            }
+        }
+        monsterHappy = false
+    }
+    func pickNeed(){
+        if penalties < 4{
+            let rand = arc4random_uniform(3)
+            
+            if rand == 1 {
+                foodImg.alpha = DIM_ALPHA
+                foodImg.userInteractionEnabled = false
                 
-                skull3.alpha = OPAQUE
-                timer.invalidate()
-                monsterImg.playDeathAnimation()
+                heartImg.alpha = OPAQUE
+                heartImg.userInteractionEnabled = true
                 
+                boulderImg.alpha = DIM_ALPHA
+                boulderImg.userInteractionEnabled=false
+            } else if rand == 0{
+                foodImg.alpha = OPAQUE
+                foodImg.userInteractionEnabled = true
+                
+                heartImg.alpha = DIM_ALPHA
+                heartImg.userInteractionEnabled = false
+                
+                boulderImg.alpha = DIM_ALPHA
+                boulderImg.userInteractionEnabled = false
+            } else {
+                minerImg.hidden = false
                 foodImg.alpha = DIM_ALPHA
                 foodImg.userInteractionEnabled = false
                 
                 heartImg.alpha = DIM_ALPHA
                 heartImg.userInteractionEnabled = false
                 
-                sfxDeath.play()
-                
-            } else {
-                
-                skull.alpha = DIM_ALPHA
-                skull2.alpha = DIM_ALPHA
-                skull3.alpha = DIM_ALPHA
+                boulderImg.alpha = OPAQUE
+                boulderImg.userInteractionEnabled = true
+                minerImg.playAppearAnimation()
             }
-            
+            currentImage = rand
         }
-        let rand = arc4random_uniform(2)
         
-        if rand == 1 {
-            foodImg.alpha = DIM_ALPHA
-            foodImg.userInteractionEnabled = false
-            
-            heartImg.alpha = OPAQUE
-            heartImg.userInteractionEnabled = true
-        } else {
-            foodImg.alpha = OPAQUE
-            foodImg.userInteractionEnabled = true
-            
-            heartImg.alpha = DIM_ALPHA
-            heartImg.userInteractionEnabled = false
-        }
-        currentImage = rand
-        monsterHappy = false
     }
-    
+    func restartGame(){
+        penalties = 0
+        monsterImg.playIdleAnimation()
+        startTimer()
+        skull.alpha = DIM_ALPHA
+        skull2.alpha = DIM_ALPHA
+        skull3.alpha = DIM_ALPHA
+        restartBtn.hidden = true
+    }
+    func gameOver(){
+        skull3.alpha = OPAQUE
+        timer.invalidate()
+        monsterImg.playDeathAnimation()
+        
+        foodImg.alpha = DIM_ALPHA
+        foodImg.userInteractionEnabled = false
+        
+        heartImg.alpha = DIM_ALPHA
+        heartImg.userInteractionEnabled = false
+        
+        boulderImg.alpha = DIM_ALPHA
+        boulderImg.userInteractionEnabled = false
+        
+        restartBtn.hidden = false
+        
+        sfxDeath.play()
+    }
 }
 

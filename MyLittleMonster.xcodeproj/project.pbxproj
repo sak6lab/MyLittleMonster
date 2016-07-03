@@ -21,6 +21,7 @@
 		F55477A71D272AE60061CB75 /* MyLittleMonsterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55477A61D272AE60061CB75 /* MyLittleMonsterUITests.swift */; };
 		F58658881D27F4BD0005716C /* DragImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58658871D27F4BD0005716C /* DragImage.swift */; };
 		F586588A1D27FD630005716C /* MonsterImg.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58658891D27FD630005716C /* MonsterImg.swift */; };
+		F5E1F7C81D295D480020EA7A /* MinerImg.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E1F7C71D295D480020EA7A /* MinerImg.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		F55477A81D272AE60061CB75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F58658871D27F4BD0005716C /* DragImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragImage.swift; sourceTree = "<group>"; };
 		F58658891D27FD630005716C /* MonsterImg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MonsterImg.swift; sourceTree = "<group>"; };
+		F5E1F7C71D295D480020EA7A /* MinerImg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MinerImg.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +126,7 @@
 				F55477921D272AE60061CB75 /* Info.plist */,
 				F58658871D27F4BD0005716C /* DragImage.swift */,
 				F58658891D27FD630005716C /* MonsterImg.swift */,
+				F5E1F7C71D295D480020EA7A /* MinerImg.swift */,
 			);
 			path = MyLittleMonster;
 			sourceTree = "<group>";
@@ -285,6 +288,7 @@
 				F586588A1D27FD630005716C /* MonsterImg.swift in Sources */,
 				F55477891D272AE60061CB75 /* ViewController.swift in Sources */,
 				F58658881D27F4BD0005716C /* DragImage.swift in Sources */,
+				F5E1F7C81D295D480020EA7A /* MinerImg.swift in Sources */,
 				F55477871D272AE60061CB75 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

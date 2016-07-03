@@ -51,6 +51,21 @@ class MonsterImg: UIImageView{
         self.startAnimating()
 
     }
+    func playAttackAnimation(){
+        self.image = UIImage(named: "idle1.png")
+        self.animationImages = nil
+        
+        var imgArray = [UIImage]()
+        for x in 1...8{
+            if let img = UIImage(named: "attack\(x)"){
+                imgArray.append(img)
+            }
+        }
+        self.animationImages = imgArray
+        self.animationDuration = 0.8
+        self.animationRepeatCount = 1
+        self.startAnimating()
+    }
 }
 
     
