@@ -26,6 +26,7 @@ class ViewController: UIViewController {
     var sfxHeart: AVAudioPlayer!
     var sfxDeath: AVAudioPlayer!
     var sfxSkull: AVAudioPlayer!
+    var sfxHit: AVAudioPlayer!
     
     let DIM_ALPHA: CGFloat = 0.2
     let OPAQUE: CGFloat = 1.0
@@ -34,6 +35,7 @@ class ViewController: UIViewController {
     var monsterHappy = false
     var currentImage: UInt32 = 0
     
+    var outMiner = false
     var penalties = 0
     var timer: NSTimer!
     
@@ -47,6 +49,8 @@ class ViewController: UIViewController {
         skull2.alpha = DIM_ALPHA
         skull3.alpha = DIM_ALPHA
         
+        pickNeed()
+        
         do{
             try musicPlayer = AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("cave-music", ofType: ".mp3")!))
             
@@ -57,6 +61,7 @@ class ViewController: UIViewController {
             try sfxDeath = AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("death", ofType: ".wav")!))
             
             try sfxSkull = AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("skull", ofType: ".wav")!))
+            try sfxHit = AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("hit", ofType: ".wav")!))
                 
         }catch let err as NSError {
             print(err.debugDescription )
@@ -68,6 +73,7 @@ class ViewController: UIViewController {
         sfxHeart.prepareToPlay()
         sfxDeath.prepareToPlay()
         sfxSkull.prepareToPlay()
+        sfxHit.prepareToPlay()
         
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(ViewController.itemDroppedOnCharacter) , name: "onTargetDropped", object: nil)
@@ -88,13 +94,18 @@ class ViewController: UIViewController {
         heartImg.alpha = DIM_ALPHA
         heartImg.userInteractionEnabled = false
         
+        boulderImg.alpha = DIM_ALPHA
+        boulderImg.userInteractionEnabled = false
+        
         if currentImage == 0 {
             sfxBite.play()
         } else  if currentImage == 1{
             sfxHeart.play()
         } else {
             monsterImg.playAttackAnimation()
+            sfxHit.play()
             minerImg.playHideAnimation()
+            outMiner = false
         }
     }
     func startTimer(){
@@ -160,7 +171,10 @@ class ViewController: UIViewController {
                 
                 boulderImg.alpha = OPAQUE
                 boulderImg.userInteractionEnabled = true
-                minerImg.playAppearAnimation()
+                if !outMiner {
+                    minerImg.playAppearAnimation()
+                    outMiner = true
+                }
             }
             currentImage = rand
         }
@@ -188,6 +202,8 @@ class ViewController: UIViewController {
         
         boulderImg.alpha = DIM_ALPHA
         boulderImg.userInteractionEnabled = false
+        minerImg.playHideAnimation()
+        outMiner = false
         
         restartBtn.hidden = false
         
