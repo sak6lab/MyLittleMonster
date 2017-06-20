@@ -1,2 +1,2 @@
 # MyLittleMonster
-App that resembles gigapets //intended for personal learning
+An app that lets you take care of your own virtual monster.
